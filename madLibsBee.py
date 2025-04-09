@@ -5,3 +5,5 @@
 
 class Player:
     """ Single person player  """
+    def init(self, player):
+        self.player= player
