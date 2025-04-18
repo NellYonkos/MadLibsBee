@@ -1,4 +1,6 @@
 #sample dictionaries
+import re
+
 letterpots = {
     "ehprsyz": [
         "zephyrs",
@@ -91,6 +93,9 @@ def totalpoints(letterpot):
             letterpoints[letter] = round(1 + score * 9, 0) #10-1 scale
 
     return(letterpoints)
+    
+def extract_placeholders(story):
+    return re.findall(r'\b(?:noun|verb|adjective|pronoun|plural noun)\d+\b', story)
 
 #totalpoints("ehprsyz")
 
