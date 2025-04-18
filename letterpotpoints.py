@@ -95,6 +95,18 @@ def totalpoints(letterpot):
     return(letterpoints)
     
 def extract_placeholders(story):
+    """
+    Extracts all placeholder words from a story that represent missing parts of speech.
+
+    A placeholder is defined as a part of speech followed by a number (example: 'noun1', 'verb2').
+    This function looks for whole words in that format and returns them as a list.
+
+    Args:
+        story (str): The input story containing placeholders for missing words.
+
+    Returns:
+        list: A list of placeholder strings found in the story (e.g., ['noun1', 'verb2']).
+    """
     return re.findall(r'\b(?:noun|verb|adjective|pronoun|plural noun)\d+\b', story)
 
 #totalpoints("ehprsyz")
