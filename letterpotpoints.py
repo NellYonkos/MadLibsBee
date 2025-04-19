@@ -1,5 +1,6 @@
 #sample dictionaries
 import re
+import random
 
 letterpots = {
     "ehprsyz": [
@@ -109,6 +110,40 @@ def extract_placeholders(story):
     """
     return re.findall(r'\b(?:noun|verb|adjective|pronoun|plural noun)\d+\b', story)
 
+def help(letterpot):
+    """Takes the words out of a dictionary of words corresponding to the chosen
+    7 letters and filters out the guessed words. Prints out a word that has been
+    randomly chosen from the unguessed words as the first and last letters of 
+    the word with the middle letters being unknown.
+
+    Args:
+        letterpot (str): A dictionary with 7 character string as the key 
+        and a list of strings as value. The list of strings is all of the 4+ 
+        letter words that can be made with the 7 characters. (This will most 
+        likely be done in a class, but is here for interim deliverable)
+    """
+    
+    #Initializes a dictionary for the words and a list of guesses made
+    #This will most likely be done in a class (not directly in here)
+    words = letterpots[letterpot]
+    guessed_words = []
+    
+    #Initialized a new list then appends unguessed words to that list
+    temp_list = []
+    for word in words:
+        if word not in guessed_words and word not in temp_list:
+            temp_list.append(word)
+            
+    #Pulls a random word out of the temporary list and uses it as a help word
+    help_word = random.choice(temp_list)
+    temp_list.remove(help_word)
+    
+    #Create a length of the word where the middle letters are the "-" symbol
+    space_length = (len(help_word) - 2) * "-"
+    
+    #Print the first and last letters of the word with the middle "-" symbols
+    print(f"Here is your hint\n{help_word[0] + space_length + help_word[-1]}")
+    
 #totalpoints("ehprsyz")
 
 
