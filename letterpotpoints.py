@@ -146,4 +146,38 @@ def help(letterpot):
     
 #totalpoints("ehprsyz")
 
-
+def isvalid(letterpot, userinput, wordtype, modifier):
+    """
+     Figure out whether or not the input was valid. 
+ 
+     Args:
+         letterpot (dict): A key in a dictionary with the letters as keys and
+         valid words as values.
+         
+         input (str): A word inputted by the player. 
+         
+         wordtype (str): type of word, whether it be a noun, verb, or something else.
+         
+         modifier (str): suffix to a word, such as striking(ly), dashing(ly)
+         
+     Returns:
+         Output (str): If the input was valid given the constraints, it will
+         return the input. Else, it will throw a value error.
+     """
+     
+    # Check if word is valid according to letterpot
+    for letter in userinput:
+         if letter not in letterpot:
+             raise ValueError ("This is not a valid Word! (Wrong Letters)")
+         
+    # Check if word is valid according to wordtype constraint
+    if userinput not in words[wordtype]:
+        raise ValueError ("This is not a valid word! (Wrong Type)")
+    else:
+        
+        # Check if word contains modifier in its correct position
+        if not userinput.endswith(modifier):
+            raise ValueError ("This is not a valid word! (Modifier is not present!)")
+        else:
+            return userinput
+     
