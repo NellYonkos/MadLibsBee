@@ -44,6 +44,28 @@ letterpots = {
 }
 
 
+partofspeech = {
+    "noun": [
+        "zephyr", "hyper", "hype", "prey", 
+        "pyre", "spyre", "prez", "prys", "resh", "rype", "sype", "syph"   
+    ],
+    "plural noun": [
+        "zephyrs", "hypers", "hypes", "preys", "pyres", "hers", "heps", "heys", 
+        "hyes", "pehs", "pyes", "rehs", "reps", "ryes", "yeps", "zeps"
+    ],
+    "verb": [
+        "hype", "hypes", "prey", "preys", "espy", "heps", "sypher"
+    ],
+    "adjective": [
+        "hyper", "sphery", "shyer", "spry", "hep"
+    ],
+    "pronoun": [
+        "hers"
+    ]
+}
+
+
+
 def totalpoints(letterpot):
     """Calculate whole number point value for each letter in letter pot based on
     frequency. More rare = more points. Max value is 10 points, minimum value is
@@ -59,9 +81,13 @@ def totalpoints(letterpot):
         and integer game point values as the mapped value. Game points are 
         between 1-10. 10 being the rarest letter, 1 being the most common. 
         If there is an equal proportion of all letters in letterpots.
+        
+    Skill from list: 
+        use of a key function (which can be a lambda expression) with the 
+        following commands:  min(), max()
+        
+    Written by: Nell Yonkos
     """
-    
-    
     #get count of each letter in all letterpot words
     words = letterpots[letterpot]
     lettercount = {}
@@ -80,9 +106,11 @@ def totalpoints(letterpot):
     for letter in lettercount:
         letterproportion[letter] = lettercount[letter]/totalletters
     
-    #least/most common letter
-    minfreq = min(letterproportion.values())
-    maxfreq = max(letterproportion.values())
+    #least/most common letter using min() and max() key functions
+    minletter = min(letterproportion, key=lambda letter: letterproportion[letter])
+    maxletter = max(letterproportion, key=lambda letter: letterproportion[letter])
+    minfreq = letterproportion[minletter]
+    maxfreq = letterproportion[maxletter]
     
     #calculate each letter's point value
     letterpoints = {}
@@ -93,7 +121,9 @@ def totalpoints(letterpot):
             score = (maxfreq - letterproportion[letter]) / (maxfreq - minfreq) #0-1 scale
             letterpoints[letter] = round(1 + score * 9, 0) #10-1 scale
 
-    return(letterpoints)
+    return letterpoints, lettercount
+    
+    
     
 def extract_placeholders(story):
     """
@@ -107,8 +137,13 @@ def extract_placeholders(story):
 
     Returns:
         list: A list of placeholder strings found in the story (e.g., ['noun1', 'verb2']).
+        
+    Skill from list: 
+        Regular Expression
     """
     return re.findall(r'\b(?:noun|verb|adjective|pronoun|plural noun)\d+\b', story)
+
+
 
 def help(letterpot):
     """Takes the words out of a dictionary of words corresponding to the chosen
@@ -121,6 +156,9 @@ def help(letterpot):
         and a list of strings as value. The list of strings is all of the 4+ 
         letter words that can be made with the 7 characters. (This will most 
         likely be done in a class, but is here for interim deliverable)
+        
+    Skill from list: 
+        f-string containing expression
     """
     
     #Initializes a dictionary for the words and a list of guesses made
@@ -144,7 +182,7 @@ def help(letterpot):
     #Print the first and last letters of the word with the middle "-" symbols
     print(f"Here is your hint\n{help_word[0] + space_length + help_word[-1]}")
     
-#totalpoints("ehprsyz")
+
 
 def isvalid(letterpot, userinput, wordtype, modifier):
     """
@@ -181,3 +219,39 @@ def isvalid(letterpot, userinput, wordtype, modifier):
         else:
             return userinput
      
+     
+     
+def inputpoints(inputword, letterpot, wordtype, modifier):
+    """calculates the additional score for each input word
+    
+    Args:
+        inputword (str): word guessed by player
+        letterpot (dict): A dictionary with 7 character string as the key 
+        and a list of strings as value. The list of strings is all of the 4+ 
+        letter words that can be made with the 7 characters. 
+        wordtype (str): word part of speech (noun, verb, etc...)
+        modifier (str): suffix to a word
+    
+    Returns:
+        f-string: stating how many total points have been found out of possible
+        string: stating invalid word if ValueError is thrown
+    
+    Skill from list:
+        Sequence unpacking
+        
+    Written by: Nell Yonkos    
+    """
+    letterpoints, lettercount = totalpoints(letterpot) 
+    possiblepoints = 0
+    for letter in lettercount:
+        possiblepoints += lettercount[letter] * letterpoints[letter]
+    try:
+        isvalid(letterpot, inputword, wordtype, modifier)
+        earnedpoints = 0
+        for letter in inputword:
+            earnedpoints += letterpoints[letter]
+        return f"You've found {earnedpoints} out of {possiblepoints} possible."
+    except ValueError:
+        return "Invalid word!"
+    
+    
