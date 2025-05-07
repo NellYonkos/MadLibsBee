@@ -64,6 +64,28 @@ partofspeech = {
     ]
 }
 
+class Player:
+    """
+    A class to represent the player.
+
+    Attributes:
+        name (str): Player's name.
+        score (int): Player's total score.
+        guessed_words (list): List of valid words the player has guessed.
+    """
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
+        self.guessed_words = []
+
+    def add_score(self, points):
+        self.score += points
+
+    def guess_word(self, word):
+        self.guessed_words.append(word)
+
+    def __str__(self):
+        return f"{self.name}: {self.score} points"
 
 
 def totalpoints(letterpot):
