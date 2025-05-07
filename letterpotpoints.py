@@ -67,7 +67,6 @@ partofspeech = {
 class Player:
     """
     A class to represent the player.
-
     Attributes:
         name (str): Player's name.
         score (int): Player's total score.
@@ -275,5 +274,29 @@ def inputpoints(inputword, letterpot, wordtype, modifier):
         return f"You've found {earnedpoints} out of {possiblepoints} possible."
     except ValueError:
         return "Invalid word!"
+
+def auto_fill_story(story, partofspeech_dict):
+    """
+    Fills in missing part of speech words automatically using words from the dictionary.
+    Args:
+    story (str): The input story with placeholders like 'noun1', 'verb2', etc.
+        partofspeech_dict (dict): A dictionary where keys are parts of speech and values are words for that pos that
+        will work.
+    Returns:
+        str: The completed story with all placeholders replaced with valid words.
+    """
+    placeholders = extract_placeholders(story)
+    filled = {}
+    
+    for placeholder in placeholders:
+        pos = re.match(r"(noun|verb|adjective|pronoun|plural noun)", placeholder).group()
+        if placeholder not in filled:
+            filled[placeholder] = random.choice(partofspeech_dict[pos])
+            
+    for placeholder, word in filled.items():
+        story = story.replace(placeholder, word)
+    
+    return story
+
     
     
