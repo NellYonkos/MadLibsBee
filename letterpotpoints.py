@@ -299,7 +299,38 @@ def auto_fill_story(story, partofspeech_dict):
     
     return story
 
-# Make it work here:
+class Game:
+    def __init__ 
+# Make the file runnable:
+
+def main(story, player):
+    """Set up and play a game of madlibs.
+
+    Args:
+        story (str): path to a text file containing one word per line. Will
+            be used to select a word for the game.
+        human_players (str): name of the human player.
+
+    
+    Side effects:
+        Writes to stdout (see Game.play()).
+    """
+    with open(story, "r", encoding="utf-8") as f:
+        words = [line.strip().upper() for line in f
+                 if len(line.strip()) >= MIN_WORD_LEN]
+    players = [HumanPlayer(name) for name in human_players]
+    game = Game(words, players)
+    game.play()
+    
+
+# note: How story be displayed: It counts number of (!, ., ?) Everything
+# before that turns into capturing group via regex. Via for or while loop,
+# it takes each individual sentence and stores it temporarily in a variable.
+# Regex is then used to replace any "(noun), (verb), (adverb), (adjective)" etc
+# matches with the user input
+    
+    
+    
 def parse_args(arglist):
     """ Parse command-line arguments.
     
