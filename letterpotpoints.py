@@ -1,69 +1,95 @@
-#sample dictionaries
 import re
 import random
 from argparse import ArgumentParser
 
 letterpots = {
     "ehprsyz": [
-        "zephyrs",
-        "zephyr",
-        "hypers",
-        "sphery",
-        "sypher",
-        "hyper",
-        "hypes",
-        "preys",
-        "pyres",
-        "shyer",
-        "spyre",
-        "espy",
-        "heps",
-        "hers",
-        "hery",
-        "hesp",
-        "heys",
-        "hyes",
-        "hype",
-        "hyps",
-        "pehs",
-        "prey",
-        "prez",
-        "prys",
-        "pyes",
-        "pyre",
-        "rehs",
-        "reps",
-        "resh",
-        "ryes",
-        "rype",
-        "spry",
-        "sype",
-        "syph",
-        "yeps",
-        "zeps"
+        "zephyrs","zephyr","hypers","sphery","sypher","hyper","hypes","preys",
+        "pyres","shyer","spyre","espy","heps","hers","hery","hesp","heys",
+        "hyes","hype","hyps","pehs","prey","prez","prys","pyes","pyre","rehs",
+        "reps","resh","ryes","rype","spry","sype","syph","yeps","zeps"
+    ],
+    "aerlswy": [
+        "lawyers","lawyer", 
+        "sawyer","swayer", "sweary","layers", "rayles","relays", "slayer",
+        "walers","warsle","rawly","swaly","swayl","weary","wyles","yawls",
+        "alews","arsey","aryls","ayres","early","eyras","lawer","layer","leary",
+        "lyase","lyres","rayle","relay","resaw","resay","ryals","sawer","sayer",
+        "sewar","slyer","swale","sware","sweal","swear","waler","wales","wares",
+        "weals","wears","yales","years","arles","earls","laers","lares","laser",
+        "lears","rales","reals","seral","awry","sway","swey","waly","wary",
+        "ways","weys","wyes","wyle","yawl","yaws","yews","aery","alew","arew",
+        "arsy","aryl","awes","awls","ayes","ayre","easy","eyas","eyra","laws",
+        "lays","leys","lyes","lyra","lyre","lyse","raws","rays","rely","rews",
+        "ryal","ryas","ryes","slaw","slay", "slew","sley","waes","wale","ware",
+        "wars","wase","weal","wear","wels","yale","yare","year","yeas","ales",
+        "ares","arle","arse","earl","ears","eras","laer","lare","lars","lase",
+        "lear","leas","rale","rase","real","sale","seal","sear","sera","slae" 
     ]
 }
 
 
-partofspeech = {
+partofspeech_dict = {
     "noun": [
         "zephyr", "hyper", "hype", "prey", 
-        "pyre", "spyre", "prez", "prys", "resh", "rype", "sype", "syph"   
+        "pyre", "spyre", "prez", "prys", "resh", "rype", "sype", "syph",
+        "lawyer", "sawyer", "swayer", "layer", "slayer", "relay", "resaw", "resay", 
+        "rayle", "sawer", "sayer", "sewar", "swale", "sware", "sweal", "swear", "waler", 
+        "wale", "ware", "wars", "wase", "wear", "laser", "rales", "reals", "seral", 
+        "ayre", "alew", "aryl", "eyas", "eyra", "lyase", "lyra", "lyre", "lyse", "ryal", 
+        "ryas", "yawl", "aery", "weal", "wale", "year", "sale", "seal", "lear", "rale", 
+        "real", "earl", "ears", "arse", "arsey", "swey", "slaw", "slew", "sley", "laws", 
+        "lays", "leys", "lyes", "raws", "rays", "rews", "ways", "weys", "wyes", "wyle", 
+        "yaws", "yews", "waes", "wels", "laer", "lare", "lars", "lase", "leas", "rase", 
+        "sera", "slae", "arle", "ares", "ales"
     ],
     "plural noun": [
         "zephyrs", "hypers", "hypes", "preys", "pyres", "hers", "heps", "heys", 
-        "hyes", "pehs", "pyes", "rehs", "reps", "ryes", "yeps", "zeps"
+        "hyes", "pehs", "pyes", "rehs", "reps", "ryes", "yeps", "zeps",
+        "lawyers", "layers", "rayles", "relays", "walers", "warsle", "wyles", "yawls", 
+        "alews", "aryls", "ayres", "eyras", "lyres", "ryals", "swaly", "swayl", "wales", 
+        "wares", "weals", "wears", "yales", "years", "arles", "earls", "laers", "lares", 
+        "lears", "yaws", "yews", "ways", "weys", "wyes", "laws", "lays", "leys", "lyes", 
+        "raws", "rays", "rews", "ryas"
     ],
     "verb": [
-        "hype", "hypes", "prey", "preys", "espy", "heps", "sypher"
+        "hype", "hypes", "prey", "preys", "espy", "heps", "sypher","swear", 
+        "wear", "relay", "resaw", "resay", "slay", "sway", "swale", "swer", 
+        "sear", "sale", "seal", "lear", "rase", "rely", "slew"
     ],
     "adjective": [
-        "hyper", "sphery", "shyer", "spry", "hep"
+        "hyper", "sphery", "shyer", "spry", "hep","sweary", "weary", "early", 
+        "leary", "slyer", "wary", "awry", "arsey", "easy", 
+        "rawly", "swaly", "swayl"
     ],
     "pronoun": [
         "hers"
     ]
 }
+
+fillerpartofspeech = {
+    "noun": [
+        "apple","breeze","candle","dragon","forest","island","jungle","mountain",
+        "pencil","village"
+    ],
+    "plural noun": [
+        "apples","books","cars","dogs","flowers","houses","islands","kites",
+        "stars","trees"
+    ],
+    "verb": [
+        "climb","draw","explore","jump","laugh","paint","run","sing","swim",
+        "write"
+    ],
+    "adjective": [
+        "bright","calm","fierce","giant","happy","lazy","quick","shiny","tiny",
+        "wild"
+    ]}
+
+story = """
+Just when it seemed every noun1 under the noun2  had been named, 
+researchers at the University of plural noun1, have identified a adjective new 
+one. Called "olo", this shade lies outside the normal range of noun3 vision."
+"""
 
 class Player:
     """
@@ -83,6 +109,18 @@ class Player:
 
     def guess_word(self, word):
         self.guessed_words.append(word)
+    
+    def pos_guess(self, partofspeech_dict):
+        pos = {"noun":[], "plural noun":[], "verb":[], "adjective":[]}
+        for word in self.guessed_words:
+            count = 0
+            for i in partofspeech_dict:
+                if word in partofspeech_dict[i]:
+                    pos[i].append(word)
+                    count += 1
+            if count == 0:
+                pass
+        return pos
 
     def __str__(self):
         return f"{self.name}: {self.score} points"
@@ -231,7 +269,7 @@ def isvalid(letterpot, userinput, wordtype, modifier):
              raise ValueError ("This is not a valid Word! (Wrong Letters)")
          
     # Check if word is valid according to wordtype constraint
-    if userinput not in words[wordtype]:
+    if userinput not in partofspeech_dict[wordtype]:
         raise ValueError ("This is not a valid word! (Wrong Type)")
     else:
         
@@ -299,67 +337,53 @@ def auto_fill_story(story, partofspeech_dict):
     
     return story
 
-class Game:
-    def __init__ 
-# Make the file runnable:
-
-def main(story, player):
-    """Set up and play a game of madlibs.
-
-    Args:
-        story (str): path to a text file containing one word per line. Will
-            be used to select a word for the game.
-        human_players (str): name of the human player.
-
+def get_word_type(word, partofspeech_dict):
+    """gets part of speech for play() function"""
+    for i in partofspeech_dict:
+        if word in partofspeech_dict[i]:
+            return i
     
-    Side effects:
-        Writes to stdout (see Game.play()).
-    """
-    with open(story, "r", encoding="utf-8") as f:
-        words = [line.strip().upper() for line in f
-                 if len(line.strip()) >= MIN_WORD_LEN]
-    players = [HumanPlayer(name) for name in human_players]
-    game = Game(words, players)
-    game.play()
+def play():
+    print("Ready to play our Spelling Bee MadLibs Fusion game?!\n")
+    name = input("Player name:  ")
+    player = Player(name)
+    game_pot = "aerlswy"
+    print(f"Okay, {name}... your letters are A,E,R,L,S,W,Y\n")
+    print("You can only use each letter once per word and your input words must be at least 4 letters long.\n")
+    print("They've also got to be real words in the English dictionary-- I'll be checking.\n")
+    print("One word per guess. Type 'HELP' for a hint. Type 'DONE' when you're out.\n\n")
     
-
-# note: How story be displayed: It counts number of (!, ., ?) Everything
-# before that turns into capturing group via regex. Via for or while loop,
-# it takes each individual sentence and stores it temporarily in a variable.
-# Regex is then used to replace any "(noun), (verb), (adverb), (adjective)" etc
-# matches with the user input
+    letterpoints, lettercount = totalpoints(game_pot)
     
-    
-    
-def parse_args(arglist):
-    """ Parse command-line arguments.
-    
-    Expect two mandatory arguments:
-        - wordlist: a path to a file containing the story
-        - names: one or more names of human players
-    
-    Also allow two optional arguments:
-        -c, --computer_player: if specified, include a computer player.
-        -v, --computer_vocab: if specified, it should be a path to another
-            wordlist file for the computer to use as its vocab.
-    
-    Args:
-        arglist (list of str): arguments from the command line.
-    
-    Returns:
-        namespace: the parsed arguments, as a namespace.
-    """
-    parser = ArgumentParser()
-    parser.add_argument("wordlist", help="path to word list text file")
-    parser.add_argument("names", nargs="*", help="player names")
-    parser.add_argument("-c", "--computer_player", action="store_true",
-                        help="add a computer player")
-    parser.add_argument("-v", "--computer_vocab", help="path to word list for"
-                        " computer")
-    return parser.parse_args(arglist)
-
+    while True:
+        userinput = input("Give me a word (or HELP or DONE):  ").lower()
+        if userinput == "done":
+            break
+        elif userinput == "help":
+            pass #########come back!
+        elif userinput in player.guessed_words:
+            print("You've already guessed that.")
+        else:
+            wordtype = get_word_type(userinput, partofspeech_dict)
+            ####want to change so i don't need this, this shouldn't be necessisary 
+            if wordtype is None:
+                print("Invalid word!")
+                continue
+            modifier = "" ##### no suffix, maybe make that optional 
+            points = inputpoints(userinput, game_pot, wordtype, modifier)
+            if points == "Invalid word!":
+                print("Invalid word!")
+            else:
+                player.guess_word(userinput)
+                earnedpoints = sum(letterpoints[letter] for letter in userinput)
+                player.add_score(earnedpoints)
+                print(points)
+                
+    print("Ready for your stody ◡̈\n")
+    print("Here it is:\n")
+    print(auto_fill_story(story, partofspeech_dict))
+                
+                
+                
 if __name__ == "__main__":
-    args = parse_args(sys.argv[1:])
-    main(args.wordlist, args.names, args.computer_player, args.computer_vocab)
-    
-    
+    play()
