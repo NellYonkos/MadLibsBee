@@ -1,6 +1,7 @@
 #sample dictionaries
 import re
 import random
+from argparse import ArgumentParser
 
 letterpots = {
     "ehprsyz": [
@@ -298,5 +299,36 @@ def auto_fill_story(story, partofspeech_dict):
     
     return story
 
+# Make it work here:
+def parse_args(arglist):
+    """ Parse command-line arguments.
+    
+    Expect two mandatory arguments:
+        - wordlist: a path to a file containing the story
+        - names: one or more names of human players
+    
+    Also allow two optional arguments:
+        -c, --computer_player: if specified, include a computer player.
+        -v, --computer_vocab: if specified, it should be a path to another
+            wordlist file for the computer to use as its vocab.
+    
+    Args:
+        arglist (list of str): arguments from the command line.
+    
+    Returns:
+        namespace: the parsed arguments, as a namespace.
+    """
+    parser = ArgumentParser()
+    parser.add_argument("wordlist", help="path to word list text file")
+    parser.add_argument("names", nargs="*", help="player names")
+    parser.add_argument("-c", "--computer_player", action="store_true",
+                        help="add a computer player")
+    parser.add_argument("-v", "--computer_vocab", help="path to word list for"
+                        " computer")
+    return parser.parse_args(arglist)
+
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
+    main(args.wordlist, args.names, args.computer_player, args.computer_vocab)
     
     
