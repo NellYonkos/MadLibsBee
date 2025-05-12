@@ -372,15 +372,21 @@ def play():
     print("One word per guess. Type 'HELP' for a hint. Type 'DONE' when you're out.\n\n")
     
     letterpoints, lettercount = totalpoints(game_pot)
+    help_points = 3
     
     while True:
         userinput = input("Give me a word (or HELP or DONE):  ").lower()
         if userinput == "done":
             break
         elif userinput == "help":
+            help_points -= 1 
+            if help_points > 1:     
             # testing to see if help func works
             # pass #########come back!!!
-            help(game_pot)
+                help(game_pot)
+                print(f"You have {help_points} hints left")
+            else:
+                print("You have used up all your hints")
         elif userinput in Player.guessed_words:
             print("You've already guessed that.")
         else:
