@@ -243,7 +243,7 @@ def help(letterpot):
     
 
 
-def isvalid(letterpot, userinput, wordtype, modifier):
+def isvalid(letterpot, userinput, wordtype):
     """
      Figure out whether or not the input was valid. 
  
@@ -254,8 +254,6 @@ def isvalid(letterpot, userinput, wordtype, modifier):
          input (str): A word inputted by the player. 
          
          wordtype (str): type of word, whether it be a noun, verb, or something else.
-         
-         modifier (str): suffix to a word, such as striking(ly), dashing(ly)
          
      Returns:
          Output (str): If the input was valid given the constraints, it will
@@ -272,15 +270,12 @@ def isvalid(letterpot, userinput, wordtype, modifier):
         raise ValueError ("This is not a valid word! (Wrong Type)")
     else:
         
-        # Check if word contains modifier in its correct position
-        if not userinput.endswith(modifier):
-            raise ValueError ("This is not a valid word! (Modifier is not present!)")
-        else:
-            return userinput
+  
+        return userinput
      
+  # Testing out inputpoints as a method in player class to access score   
      
-     
-def inputpoints(inputword, letterpot, wordtype, modifier):
+def inputpoints(inputword, letterpot, wordtype):
     """calculates the additional score for each input word
     
     Args:
@@ -289,7 +284,6 @@ def inputpoints(inputword, letterpot, wordtype, modifier):
         and a list of strings as value. The list of strings is all of the 4+ 
         letter words that can be made with the 7 characters. 
         wordtype (str): word part of speech (noun, verb, etc...)
-        modifier (str): suffix to a word
     
     Returns:
         f-string: stating how many total points have been found out of possible
@@ -300,22 +294,20 @@ def inputpoints(inputword, letterpot, wordtype, modifier):
         
     Written by: Nell Yonkos    
     """
-    earnedpoints = 0
     
     letterpoints, lettercount = totalpoints(letterpot) 
     possiblepoints = 0
+    earnedpoints = 0
     for letter in lettercount:
         possiblepoints += lettercount[letter] * letterpoints[letter]
     try:
-        isvalid(letterpot, inputword, wordtype, modifier)
+        isvalid(letterpot, inputword, wordtype)
         for letter in inputword:
             earnedpoints += letterpoints[letter]
-        return earnedpoints
-    
+        return earnedpoints, possiblepoints
+
     except ValueError:
         return "Invalid word!"
-def message(earnedpoints, possiblepoints):
-    return f"You've found {earnedpoints} out of {possiblepoints} possible."
 
 def auto_fill_story(story, partofspeech_dict):
     """
@@ -395,18 +387,23 @@ def play():
             if wordtype is None:
                 print("Invalid word!")
                 continue
-            modifier = "" ##### no suffix, maybe make that optional in the whole code
-            points = inputpoints(userinput, game_pot, wordtype, modifier)
-            if points == "Invalid word!":
-                print("Invalid word!")
-            else:
-                player.guess_word(userinput) #score doesn't add, should compound each round
-                
-                # test, as may be whats breaking
-                earnedpoints = inputpoints(userinput, game_pot, wordtype, modifier)
-                player.add_score(earnedpoints)
-                print(message(player.score, possiblepoints))
-                
+            # modifier = "" ##### no suffix, maybe make that optional in the whole code
+            # points = inputpoints(userinput, game_pot, wordtype)
+            # if points == "Invalid word!":
+            #     print("Invalid word!")
+            # else:
+            player.guess_word(userinput) #score doesn't add, should compound each round
+            
+            # test, as may be whats breaking
+            earnedpoints, possiblepoints = inputpoints(userinput, game_pot, wordtype)
+            
+            # earnedpoints returns a string
+            player.add_score(earnedpoints)
+            
+            
+            # Try having possilepoints be an attribute of player
+            print(f"You've found {player.score} out of {possiblepoints} possible.")
+            
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
     print(auto_fill_story(story, partofspeech_dict)) #this doesnt fill correctly
