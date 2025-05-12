@@ -311,7 +311,7 @@ def inputpoints(inputword, letterpot, wordtype):
     except ValueError:
         return "Invalid word!"
 
-def auto_fill_story(story, partofspeech_dict):
+def auto_fill_story(story, fillerpartofspeech):
     """
     Fills in missing part of speech words automatically using words from the dictionary.
     Args:
@@ -327,7 +327,7 @@ def auto_fill_story(story, partofspeech_dict):
     for placeholder in placeholders:
         pos = re.match(r"(noun|verb|adjective|pronoun|plural noun)", placeholder).group()
         if placeholder not in filled:
-            filled[placeholder] = random.choice(partofspeech_dict[pos])
+            filled[placeholder] = random.choice(fillerpartofspeech[pos])
             
     for placeholder, word in filled.items():
         story = story.replace(placeholder, word)
