@@ -1,6 +1,7 @@
 import re
 import random
 from argparse import ArgumentParser
+import sys
 
 letterpots = {
     "ehprsyz": [
@@ -348,7 +349,8 @@ def get_word_type(word, partofspeech_dict):
             return i
     
 def play():
-    """plays game allowing user input, takes user name, explains rules, checks
+    """
+    plays game allowing user input, takes user name, explains rules, checks
        input word validity, gives score per input word, allows hint command,
        prints story with words filled in
        
@@ -413,10 +415,7 @@ def play():
     #ideally it should fill blanks from user input first, then fill from fillerpartofspeech once user input words are all used up
     #also story should be longer to allow for a bunch of blanks to be used
                 
-                
-                
-if __name__ == "__main__":
-    play()
+    
 def parse_args(arglist):
     """ Parse command-line arguments.
     
@@ -436,3 +435,7 @@ def parse_args(arglist):
     parser.add_argument("filepath", help="Path to the TXT file"
                             "containing story")
     return parser.parse_args(arglist)
+
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
+    play(args.wordlist, args.names, args.computer_player, args.computer_vocab)
