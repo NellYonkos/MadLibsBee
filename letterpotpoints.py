@@ -300,18 +300,22 @@ def inputpoints(inputword, letterpot, wordtype, modifier):
         
     Written by: Nell Yonkos    
     """
+    earnedpoints = 0
+    
     letterpoints, lettercount = totalpoints(letterpot) 
     possiblepoints = 0
     for letter in lettercount:
         possiblepoints += lettercount[letter] * letterpoints[letter]
     try:
         isvalid(letterpot, inputword, wordtype, modifier)
-        earnedpoints = 0
         for letter in inputword:
             earnedpoints += letterpoints[letter]
-        return f"You've found {earnedpoints} out of {possiblepoints} possible."
+        return earnedpoints
+    
     except ValueError:
         return "Invalid word!"
+def message(earnedpoints, possiblepoints):
+    return f"You've found {earnedpoints} out of {possiblepoints} possible."
 
 def auto_fill_story(story, partofspeech_dict):
     """
@@ -365,8 +369,10 @@ def play():
     print("Ready to play our Spelling Bee MadLibs Fusion game?!\n")
     name = input("Player name:  ")
     player = Player(name)
-    game_pot = "aerlswy"
-    print(f"Okay, {name}... your letters are A,E,R,L,S,W,Y\n")
+    
+    # Try to make gamepot random?
+    game_pot = random.choice(list(letterpots.keys()))
+    print(f"Okay, {name}... your letters are \"{game_pot}\"\n")
     print("You can only use each letter once per word and your input words must be at least 4 letters long.\n")
     print("They've also got to be real words in the English dictionary-- I'll be checking.\n")
     print("One word per guess. Type 'HELP' for a hint. Type 'DONE' when you're out.\n\n")
@@ -378,7 +384,9 @@ def play():
         if userinput == "done":
             break
         elif userinput == "help":
-            pass #########come back!!!
+            # testing to see if help func works
+            # pass #########come back!!!
+            help(game_pot)
         elif userinput in player.guessed_words:
             print("You've already guessed that.")
         else:
@@ -393,9 +401,11 @@ def play():
                 print("Invalid word!")
             else:
                 player.guess_word(userinput) #score doesn't add, should compound each round
-                earnedpoints = sum(letterpoints[letter] for letter in userinput)
+                
+                # test, as may be whats breaking
+                earnedpoints = inputpoints(userinput, game_pot, wordtype, modifier)
                 player.add_score(earnedpoints)
-                print(points)
+                print(message(player.score, possiblepoints))
                 
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
