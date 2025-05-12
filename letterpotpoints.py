@@ -378,10 +378,10 @@ def play():
         userinput = input("Give me a word (or HELP or DONE):  ").lower()
         if userinput == "done":
             break
+        # testing to see if help function works
         elif userinput == "help":
             help_points -= 1 
             if help_points > 1:     
-            # testing to see if help function works
             # utilize help function only if enough help points are available
                 help(game_pot)
                 print(f"You have {help_points} hints left")
