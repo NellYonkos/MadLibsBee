@@ -225,12 +225,11 @@ def help(letterpot):
     #Initializes a dictionary for the words and a list of guesses made
     #This will most likely be done in a class (not directly in here)
     words = letterpots[letterpot]
-    guessed_words = []
     
     #Initialized a new list then appends unguessed words to that list
     temp_list = []
     for word in words:
-        if word not in guessed_words and word not in temp_list:
+        if word not in Player.guessed_words and word not in temp_list:
             temp_list.append(word)
             
     #Pulls a random word out of the temporary list and uses it as a help word
@@ -382,7 +381,7 @@ def play():
             # testing to see if help func works
             # pass #########come back!!!
             help(game_pot)
-        elif userinput in player.guessed_words:
+        elif userinput in Player.guessed_words:
             print("You've already guessed that.")
         else:
             wordtype = get_word_type(userinput, partofspeech_dict)
@@ -395,17 +394,17 @@ def play():
             # if points == "Invalid word!":
             #     print("Invalid word!")
             # else:
-            player.guess_word(userinput) #score doesn't add, should compound each round
+            Player.guess_word(userinput) #score doesn't add, should compound each round
             
             # test, as may be whats breaking
             earnedpoints, possiblepoints = inputpoints(userinput, game_pot, wordtype)
             
             # earnedpoints returns a string
-            player.add_score(earnedpoints)
+            Player.add_score(earnedpoints)
             
             
             # Try having possilepoints be an attribute of player
-            print(f"You've found {player.score} out of {possiblepoints} possible.")
+            print(f"You've found {Player.score} out of {possiblepoints} possible.")
             
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
