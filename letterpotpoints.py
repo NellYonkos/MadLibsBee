@@ -1,5 +1,6 @@
 import re
 import random
+from argparse import ArgumentParser
 
 letterpots = {
     "ehprsyz": [
@@ -406,6 +407,8 @@ def play():
             
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
+    
+    # auto_fill_story is what fills in the story
     print(auto_fill_story(story, partofspeech_dict)) #this doesnt fill correctly
     #ideally it should fill blanks from user input first, then fill from fillerpartofspeech once user input words are all used up
     #also story should be longer to allow for a bunch of blanks to be used
@@ -414,3 +417,22 @@ def play():
                 
 if __name__ == "__main__":
     play()
+def parse_args(arglist):
+    """ Parse command-line arguments.
+    
+    Expect one mandatory arguments:
+        - story: a path to a file containing a fill-in-the-blank story
+        
+    
+    
+    Args:
+        arglist (list of str): arguments from the command line.
+    
+    Returns:
+        namespace: the parsed arguments, as a namespace.
+        By: Vonn Sayasa
+    """
+    parser = ArgumentParser()
+    parser.add_argument("filepath", help="Path to the TXT file"
+                            "containing story")
+    return parser.parse_args(arglist)
