@@ -1,6 +1,5 @@
 import re
 import random
-from argparse import ArgumentParser
 
 letterpots = {
     "ehprsyz": [
@@ -338,12 +337,31 @@ def auto_fill_story(story, partofspeech_dict):
     return story
 
 def get_word_type(word, partofspeech_dict):
-    """gets part of speech for play() function"""
+    """gets part of speech for play() function
+    Args: 
+        word (str): word in letterpot dictionary and partofspeech_dict 
+                    dictionary
+        partofspeech_dict (dict): dictionary containing lists of valid input 
+                                  words sorted into parts of speech keys
+    Returns: 
+        str: the part of speech key from partofspeech_dict of the word
+    """
     for i in partofspeech_dict:
         if word in partofspeech_dict[i]:
             return i
     
 def play():
+    """plays game allowing user input, takes user name, explains rules, checks
+       input word validity, gives score per input word, allows hint command,
+       prints story with words filled in
+       
+    Side effects:
+    - prints game rules
+    - prints instructions to player and allows them to user input
+    - prints a madlibs style story including valid user input words
+    """
+    
+    
     print("Ready to play our Spelling Bee MadLibs Fusion game?!\n")
     name = input("Player name:  ")
     player = Player(name)
@@ -360,28 +378,30 @@ def play():
         if userinput == "done":
             break
         elif userinput == "help":
-            pass #########come back!
+            pass #########come back!!!
         elif userinput in player.guessed_words:
             print("You've already guessed that.")
         else:
             wordtype = get_word_type(userinput, partofspeech_dict)
-            ####want to change so i don't need this, this shouldn't be necessisary 
+            ####want to change so i don't need this if statement below, this shouldn't be necessisary 
             if wordtype is None:
                 print("Invalid word!")
                 continue
-            modifier = "" ##### no suffix, maybe make that optional 
+            modifier = "" ##### no suffix, maybe make that optional in the whole code
             points = inputpoints(userinput, game_pot, wordtype, modifier)
             if points == "Invalid word!":
                 print("Invalid word!")
             else:
-                player.guess_word(userinput)
+                player.guess_word(userinput) #score doesn't add, should compound each round
                 earnedpoints = sum(letterpoints[letter] for letter in userinput)
                 player.add_score(earnedpoints)
                 print(points)
                 
-    print("Ready for your stody ◡̈\n")
+    print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
-    print(auto_fill_story(story, partofspeech_dict))
+    print(auto_fill_story(story, partofspeech_dict)) #this doesnt fill correctly
+    #ideally it should fill blanks from user input first, then fill from fillerpartofspeech once user input words are all used up
+    #also story should be longer to allow for a bunch of blanks to be used
                 
                 
                 
