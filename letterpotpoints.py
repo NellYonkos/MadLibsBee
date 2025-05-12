@@ -369,7 +369,7 @@ def play():
     print(f"Okay, {name}... your letters are \"{game_pot}\"\n")
     print("You can only use each letter once per word and your input words must be at least 4 letters long.\n")
     print("They've also got to be real words in the English dictionary-- I'll be checking.\n")
-    print("One word per guess. Type 'HELP' for a hint. Type 'DONE' when you're out.\n\n")
+    print("One word per guess. Type 'HELP' for a hint(3). Type 'DONE' when you're out.\n\n")
     
     letterpoints, lettercount = totalpoints(game_pot)
     help_points = 3
@@ -381,8 +381,8 @@ def play():
         elif userinput == "help":
             help_points -= 1 
             if help_points > 1:     
-            # testing to see if help func works
-            # pass #########come back!!!
+            # testing to see if help function works
+            # utilize help function only if enough help points are available
                 help(game_pot)
                 print(f"You have {help_points} hints left")
             else:
