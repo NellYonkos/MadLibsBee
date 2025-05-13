@@ -71,19 +71,19 @@ partofspeech_dict = {
 fillerpartofspeech = {
     "noun": [
         "apple","breeze","candle","dragon","forest","island","jungle","mountain",
-        "pencil","village"
+        "pencil","village","fish","snail"
     ],
     "plural noun": [
         "apples","books","cars","dogs","flowers","houses","islands","kites",
-        "stars","trees"
+        "stars","trees","sharks"
     ],
     "verb": [
         "climb","draw","explore","jump","laugh","paint","run","sing","swim",
-        "write"
+        "write","swim","tie"
     ],
     "adjective": [
         "bright","calm","fierce","giant","happy","lazy","quick","shiny","tiny",
-        "wild"
+        "wild","pretty","ugly"
     ]}
 
 
@@ -211,7 +211,7 @@ def extract_placeholders(story):
 
 
 
-def help(letterpot):
+def help(letterpot, player):
     """Takes the words out of a dictionary of words corresponding to the chosen
     7 letters and filters out the guessed words. Prints out a word that has been
     randomly chosen from the unguessed words as the first and last letters of 
@@ -234,7 +234,7 @@ def help(letterpot):
     #Initialized a new list then appends unguessed words to that list
     temp_list = []
     for word in words:
-        if word not in Player.guessed_words and word not in temp_list:
+        if word not in player.guessed_words and word not in temp_list:
             temp_list.append(word)
             
     #Pulls a random word out of the temporary list and uses it as a help word
@@ -249,7 +249,7 @@ def help(letterpot):
     
 
 
-def isvalid(letterpot, userinput, wordtype):
+def isvalid(letterpot_key, userinput, wordtype):
     """
      Figure out whether or not the input was valid. 
  
@@ -265,14 +265,15 @@ def isvalid(letterpot, userinput, wordtype):
          Output (str): If the input was valid given the constraints, it will
          return the input. Else, it will throw a value error.
      """
+    if len(userinput) < 4:
+        raise ValueError("This is nto a valid word! Too short!")
      
     # Check if word is valid according to letterpot
-    for letter in userinput:
-         if letter not in letterpot:
-             raise ValueError ("This is not a valid Word! (Wrong Letters)")
+    if userinput not in letterpots[letterpot_key]:
+        raise ValueError("This is not a valid Word!")
          
     # Check if word is valid according to wordtype constraint
-    if userinput not in partofspeech_dict[wordtype]:
+    if userinput not in partofspeech_dict.get(wordtype, []):
         raise ValueError ("This is not a valid word! (Wrong Type)")
     else:
         
@@ -315,7 +316,7 @@ def inputpoints(inputword, letterpot, wordtype):
     except ValueError:
         return "Invalid word!"
 
-def auto_fill_story(story, fillerpartofspeech):
+def auto_fill_story(story, player, fillerpartofspeech):
     """
     Fills in missing part of speech words automatically using words from the dictionary.
     Args:
@@ -329,19 +330,43 @@ def auto_fill_story(story, fillerpartofspeech):
         text = f.read()
     # extract_placeholders extracts all the placeholders in story,
     # use this function to substitute the extracted placeholders
-    placeholders = extract_placeholders(story)
+    placeholders = extract_placeholders(text)
     
     filled = {}
+    used_words = {}
+    player_pos_words = player.pos_guess(partofspeech_dict)
+
     
+    
+    for pos in fillerpartofspeech:
+        used_words[pos] = []
+        
+
     for placeholder in placeholders:
-        match = re.match(r"<(noun|verb|adjective|pronoun|plural noun)>", placeholder)
+        match = re.match(r"(noun|verb|adjective|pronoun|plural noun)", placeholder)
         if match:
             pos = match.group(1)
-        if placeholder not in filled:
-            filled[placeholder] = random.choice(fillerpartofspeech[pos])
-            
-    for placeholder, word in filled.items():
-        text = text.replace(placeholder, word)
+            if placeholder not in filled:
+                #user input words first
+                #playerwords = player_pos_words.get(pos, [])
+
+                shouldpull = [w for w in player_pos_words.get(pos, []) if w not in used_words[pos]]
+
+                #after user input words have been used up, use filler word dictionary
+                if not shouldpull: 
+                    shouldpull = [w for w in fillerpartofspeech[pos] if w not in used_words[pos]]
+                            
+                if shouldpull:
+                    first = shouldpull.pop(0)
+                    used_words[pos].append(first)
+                    filled[placeholder] = first
+                else:
+                    filled[placeholder] = "square"
+                            
+    for placeholder in placeholders:
+        if placeholder in filled: 
+            #1 bc only want to replace first occurance only. that way each is unique            
+            text = text.replace(f"<{placeholder}>", filled[placeholder], 1)
     
     return text
 
@@ -401,7 +426,7 @@ def play(story):
             help_points -= 1 
             if help_points > 1:     
             # utilize help function only if enough help points are available
-                help(game_pot)
+                help(game_pot, player)
                 print(f"You have {help_points} hints left")
             else:
                 print("You have used up all your hints")
@@ -417,20 +442,14 @@ def play(story):
                 print("Invalid word!")
                 continue
             # modifier = "" ##### no suffix, maybe make that optional in the whole code
-            # points = inputpoints(userinput, game_pot, wordtype)
-            # if points == "Invalid word!":
-            #     print("Invalid word!")
-            # else:
-            player.guess_word(userinput) #score doesn't add, should compound each round
+            points = inputpoints(userinput, game_pot, wordtype)
+            if points == "Invalid word!":
+                 print("Invalid word!")
+            else:
+                earnedpoints, possiblepoints = points
+                player.add_score(earnedpoints)
+                print(f"You've found {player.score} out of {possiblepoints} possible.")
             
-            # test, as may be whats breaking
-            earnedpoints, possiblepoints = inputpoints(userinput, game_pot, wordtype)
-            
-            player.add_score(earnedpoints)
-            
-            
-            # Try having possilepoints be an attribute of player
-            print(f"You've found {player.score} out of {possiblepoints} possible.")
             
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
@@ -438,7 +457,7 @@ def play(story):
     # auto_fill_story is what fills in the story, DO REGEX STUFF IN AUTOFILLSTORY
     
     # STORY IS NOT INPUTTED
-    print(auto_fill_story(story, partofspeech_dict))
+    print(auto_fill_story(story, player, fillerpartofspeech))
                 
     
 def parse_args(arglist):
