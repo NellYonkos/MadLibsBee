@@ -23,3 +23,5 @@ This site has short stories for kids. We referenced the story "An Octopus in Tro
 | ---------------- | -------------- | ---------------------------------------- | 
 | totalpoints()    | Nell Yonkos    | Use of a key function w min, max commands|
 | inputpoints()    | Nell Yonkos    | Sequence unpacking                       |
+| ArgumentParser   | Vonn Sayasa    | ArgParse Function                        |
+|extractplaceholders|Vonn Sayasa    | Regex                                    |
