@@ -105,6 +105,7 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.score = 0
+        
         self.guessed_words = []
 
     def add_score(self, points):
@@ -323,12 +324,16 @@ def auto_fill_story(story, fillerpartofspeech):
         str: The completed story with all placeholders replaced with valid words.
     """
     
-    # comment placeholder
+    # extract_placeholders extracts all the placeholders in story,
+    # use this function to substitute the extracted placeholders
     placeholders = extract_placeholders(story)
+    
     filled = {}
     
     for placeholder in placeholders:
-        pos = re.match(r"(noun|verb|adjective|pronoun|plural noun)", placeholder).group()
+        match = re.match(r"<(noun|verb|adjective|pronoun|plural noun)>", placeholder)
+        if match:
+            pos = match.group(1)
         if placeholder not in filled:
             filled[placeholder] = random.choice(fillerpartofspeech[pos])
             
@@ -382,6 +387,8 @@ def play(story):
     letterpoints, lettercount = totalpoints(game_pot)
     help_points = 3
     
+    # second instance of guessed_words, this time a "global variable idk how to access from class"
+    guessed_words = []
     while True:
         userinput = input("Give me a word (or HELP or DONE):  ").lower()
         if userinput == "done":
@@ -395,9 +402,12 @@ def play(story):
                 print(f"You have {help_points} hints left")
             else:
                 print("You have used up all your hints")
-        elif userinput in Player.guessed_words:
+        
+        elif userinput in guessed_words:
             print("You've already guessed that.")
         else:
+            guessed_words.append(userinput)
+            
             wordtype = get_word_type(userinput, partofspeech_dict)
             ####want to change so i don't need this if statement below, this shouldn't be necessisary 
             if wordtype is None:
@@ -408,17 +418,16 @@ def play(story):
             # if points == "Invalid word!":
             #     print("Invalid word!")
             # else:
-            Player.guess_word(userinput) #score doesn't add, should compound each round
+            player.guess_word(userinput) #score doesn't add, should compound each round
             
             # test, as may be whats breaking
             earnedpoints, possiblepoints = inputpoints(userinput, game_pot, wordtype)
             
-            # earnedpoints returns a string
-            Player.add_score(earnedpoints)
+            player.add_score(earnedpoints)
             
             
             # Try having possilepoints be an attribute of player
-            print(f"You've found {Player.score} out of {possiblepoints} possible.")
+            print(f"You've found {player.score} out of {possiblepoints} possible.")
             
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
