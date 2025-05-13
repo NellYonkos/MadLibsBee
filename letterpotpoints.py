@@ -47,7 +47,7 @@ letterpots = {
 }
 
 
-partofspeech_dict = {""
+partofspeech_dict = {
     "noun": [
         "zephyr", "hyper", "hype", "prey", 
         "pyre", "spyre", "prez", "prys", "resh", "rype", "sype", "syph",
