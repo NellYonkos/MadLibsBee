@@ -1,3 +1,20 @@
+"""
+Spelling Bee MadLibs Fusion Game
+
+This interactive Python game is a combination of a spelling bee challenge and a MadLibs story generator.
+
+Players are given a set of 7 letters (a "letter pot") and must guess as many valid English words 
+with the letters in the letter pot. Each word must be at least 4 letters long and match a specific 
+part of speech (ex., noun, verb, pronoun). Points are awarded based on letter rarity and word validity. Players 
+can also request up to 3 hints. After the guessing phase, the game uses the player's words to fill in the story 
+(provided in the file we submit). Any remaining blanks are automatically filled using a fallback dictionary.
+The story template should use placeholders in the format: `<noun1>`, `<verb2>`, `<plural noun3>`, etc. But in this case
+we will submit a story with that condition met.
+
+Example Run Code:
+python3 madlibs.py story1.txt
+"""
+
 import re
 import random
 from argparse import ArgumentParser
