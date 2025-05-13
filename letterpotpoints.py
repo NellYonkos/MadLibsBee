@@ -86,11 +86,13 @@ fillerpartofspeech = {
         "wild"
     ]}
 
-story = """
-Just when it seemed every noun1 under the noun2  had been named, 
-researchers at the University of plural noun1, have identified a adjective new 
-one. Called "olo", this shade lies outside the normal range of noun3 vision."
-"""
+
+# HERE IS OLD STORY. COMMENTING OUT IN CASE TO TEST CUSTOM STORY FUNCTIONALITY
+# story = """
+# Just when it seemed every noun1 under the noun2  had been named, 
+# researchers at the University of plural noun1, have identified a adjective new 
+# one. Called "olo", this shade lies outside the normal range of noun3 vision."
+# """
 
 class Player:
     """
@@ -202,7 +204,7 @@ def extract_placeholders(story):
     Skill from list: 
         Regular Expression
     """
-    return re.findall(r'\b(?:noun|verb|adjective|pronoun|plural noun)\d+\b', story)
+    return re.findall(r'<(.*?)>', story)
 
 
 
@@ -320,6 +322,8 @@ def auto_fill_story(story, fillerpartofspeech):
     Returns:
         str: The completed story with all placeholders replaced with valid words.
     """
+    
+    # comment placeholder
     placeholders = extract_placeholders(story)
     filled = {}
     
@@ -347,12 +351,16 @@ def get_word_type(word, partofspeech_dict):
         if word in partofspeech_dict[i]:
             return i
     
-def play():
+def play(story):
     """
     plays game allowing user input, takes user name, explains rules, checks
        input word validity, gives score per input word, allows hint command,
        prints story with words filled in
-       
+    
+    Args:
+        story (str): path to a text file containing a story
+    
+    
     Side effects:
     - prints game rules
     - prints instructions to player and allows them to user input
@@ -415,9 +423,8 @@ def play():
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
     
-    # auto_fill_story is what fills in the story
+    # auto_fill_story is what fills in the story, DO REGEX STUFF IN AUTOFILLSTORY
     
-    # WHY IS THE 
     
     print(auto_fill_story(story, partofspeech_dict)) #this doesnt fill correctly
     #ideally it should fill blanks from user input first, then fill from fillerpartofspeech once user input words are all used up
