@@ -5,7 +5,7 @@ This interactive Python game is a combination of a spelling bee challenge and a 
 
 Players are given a set of 7 letters (a "letter pot") and must guess as many valid English words 
 with the letters in the letter pot. Each word must be at least 4 letters long and match a specific 
-part of speech (ex., noun, verb, pronoun). Points are awarded based on letter rarity and word validity. Players 
+part of speech (ex., noun, verb). Points are awarded based on letter rarity and word validity. Players 
 can also request up to 3 hints. After the guessing phase, the game uses the player's words to fill in the story 
 (provided in the file we submit). Any remaining blanks are automatically filled using a fallback dictionary.
 The story template should use placeholders in the format: `<noun1>`, `<verb2>`, `<plural noun3>`, etc. But in this case
@@ -81,7 +81,7 @@ partofspeech_dict = {
         "lice", "lima", "lime", "mace", "mail", "male", "mali", "malice", "meal", 
         "mesa", "mescal", "mica", "mice", "mile", "sail", "sale", "salmi", "same", 
         "samiel", "scale", "scam", "seal", "seam", "semi", "sial", "sima", "slam", 
-        "slice", "slime", "smile"
+        "slice", "slime", "smile","ace"
 
     ],
     "plural noun": [
@@ -114,9 +114,6 @@ partofspeech_dict = {
         "leary", "slyer", "wary", "awry", "arsey", "easy", 
         "rawly", "swaly", "swayl","calm", "laic", "lame", "male", "mesial", 
         "mesic", "same", "slim"
-    ],
-    "pronoun": [
-        "hers"
     ]
 }
 
@@ -396,7 +393,7 @@ def auto_fill_story(story, player, fillerpartofspeech):
         
 
     for placeholder in placeholders:
-        match = re.match(r"(noun|verb|adjective|pronoun|plural noun)", placeholder)
+        match = re.match(r"(noun|verb|adjective|plural noun)", placeholder)
         if match:
             pos = match.group(1)
             if placeholder not in filled:
@@ -469,7 +466,6 @@ def play(story):
     help_points = 3
     
     # second instance of guessed_words, this time a "global variable idk how to access from class"
-    guessed_words = []
     while True:
         userinput = input("Give me a word (or HELP or DONE):  ").lower()
         if userinput == "done":
@@ -484,8 +480,9 @@ def play(story):
             else:
                 print("You have used up all your hints")
         
-        elif userinput in guessed_words:
+        elif userinput in player.guessed_words:
             print("You've already guessed that.")
+        
         else:
             player.guessed_words.append(userinput)
             
