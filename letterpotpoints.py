@@ -26,11 +26,28 @@ letterpots = {
         "wars","wase","weal","wear","wels","yale","yare","year","yeas","ales",
         "ares","arle","arse","earl","ears","eras","laer","lare","lars","lase",
         "lear","leas","rale","rase","real","sale","seal","sear","sera","slae" 
+    ],
+    "aceilms": [
+        "malices","limaces","amices","camels","camise","claims","clames",
+        "climes","macles","maleic","malice","mascle","melics","mescal",
+        "scamel","emails","mailes","mesail","mesial","samiel","calms","camel",
+        "claim","clams","clime","macle","malic","melic","acmes","amice","cames"
+        "camis","maces","mesic","micas","alecs","almes","ceils","email","ileac",
+        "laces","laics","lames","limas","limes","maile","mails","males","malis",
+        "meals","miles","salic","salmi","scale","slice","slime","smile","mesia",
+        "saice","aisle","acme","calm","came","cami","cams","clam","clem","emic",
+        "mace","macs","mica","mice","mics","scam","aces","aesc","aims","alec",
+        "alme","alms","amie","amis","asci","cals","case","ceas","ceil","cels",
+        "ciel","elms","ices","lace","lacs","laic","lame","lams","leam","lice",
+        "lima","lime","maes","mail","male","mali","mals","mase","meal","mela",
+        "mels","mesa","mile","mils","mise","saic","saim","same","seam","semi",
+        "sice","sima","slam","slim","ails","ales","ilea","isle","lase","leas",
+        "leis","lias","lies","sail","sale","seal","seil","sial","sile","slae"
     ]
 }
 
 
-partofspeech_dict = {
+partofspeech_dict = {""
     "noun": [
         "zephyr", "hyper", "hype", "prey", 
         "pyre", "spyre", "prez", "prys", "resh", "rype", "sype", "syph",
@@ -42,7 +59,13 @@ partofspeech_dict = {
         "real", "earl", "ears", "arse", "arsey", "swey", "slaw", "slew", "sley", "laws", 
         "lays", "leys", "lyes", "raws", "rays", "rews", "ways", "weys", "wyes", "wyle", 
         "yaws", "yews", "waes", "wels", "laer", "lare", "lars", "lase", "leas", "rase", 
-        "sera", "slae", "arle", "ares", "ales"
+        "sera", "slae", "arle", "ares", "ales","acme", "aisle", "asci", "calm", "camel", 
+        "camise", "case", "claim", "clam", "clime", "email", "isle", "lace", "lame", 
+        "lice", "lima", "lime", "mace", "mail", "male", "mali", "malice", "meal", 
+        "mesa", "mescal", "mica", "mice", "mile", "sail", "sale", "salmi", "same", 
+        "samiel", "scale", "scam", "seal", "seam", "semi", "sial", "sima", "slam", 
+        "slice", "slime", "smile"
+
     ],
     "plural noun": [
         "zephyrs", "hypers", "hypes", "preys", "pyres", "hers", "heps", "heys", 
@@ -51,17 +74,29 @@ partofspeech_dict = {
         "alews", "aryls", "ayres", "eyras", "lyres", "ryals", "swaly", "swayl", "wales", 
         "wares", "weals", "wears", "yales", "years", "arles", "earls", "laers", "lares", 
         "lears", "yaws", "yews", "ways", "weys", "wyes", "laws", "lays", "leys", "lyes", 
-        "raws", "rays", "rews", "ryas"
+        "raws", "rays", "rews", "ryas","aces", "acmes", "ails", "aims", "ales", 
+        "alms", "calms", "camels", "cams", "claims", "clams", "climes", "elms", 
+        "emails", "ices", "laces", "lacs", "lames", "lams", "leas", "leis", 
+        "lies", "limas", "limes", "maces", "macs", "mails", "males", "malices", 
+        "malis", "mals", "meals", "micas", "miles", "mils"
+
     ],
     "verb": [
         "hype", "hypes", "prey", "preys", "espy", "heps", "sypher","swear", 
         "wear", "relay", "resaw", "resay", "slay", "sway", "swale", "swer", 
-        "sear", "sale", "seal", "lear", "rase", "rely", "slew"
+        "sear", "sale", "seal", "lear", "rase", "rely", "slew","aces", "ails", 
+        "aims", "calm", "calms", "came", "case", "claim", "claims", "clam", 
+        "clames", "clams", "email", "emails", "ices", "lace", "laces", "lame", 
+        "lames", "lams", "lies", "lime", "limes", "mail", "mailes", "mails", 
+        "sail", "scale", "scam", "seal", "seam", "slam", "slice", "slim", 
+        "slime", "smile"
+
     ],
     "adjective": [
         "hyper", "sphery", "shyer", "spry", "hep","sweary", "weary", "early", 
         "leary", "slyer", "wary", "awry", "arsey", "easy", 
-        "rawly", "swaly", "swayl"
+        "rawly", "swaly", "swayl","calm", "laic", "lame", "male", "mesial", 
+        "mesic", "same", "slim"
     ],
     "pronoun": [
         "hers"
