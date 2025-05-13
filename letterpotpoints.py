@@ -205,6 +205,8 @@ def extract_placeholders(story):
     Skill from list: 
         Regular Expression
     """
+    
+
     return re.findall(r'<(.*?)>', story)
 
 
@@ -323,7 +325,8 @@ def auto_fill_story(story, fillerpartofspeech):
     Returns:
         str: The completed story with all placeholders replaced with valid words.
     """
-    
+    with open(story, 'r') as f:
+        text = f.read()
     # extract_placeholders extracts all the placeholders in story,
     # use this function to substitute the extracted placeholders
     placeholders = extract_placeholders(story)
@@ -338,9 +341,9 @@ def auto_fill_story(story, fillerpartofspeech):
             filled[placeholder] = random.choice(fillerpartofspeech[pos])
             
     for placeholder, word in filled.items():
-        story = story.replace(placeholder, word)
+        text = text.replace(placeholder, word)
     
-    return story
+    return text
 
 def get_word_type(word, partofspeech_dict):
     """gets part of speech for play() function
@@ -434,10 +437,8 @@ def play(story):
     
     # auto_fill_story is what fills in the story, DO REGEX STUFF IN AUTOFILLSTORY
     
-    
-    print(auto_fill_story(story, partofspeech_dict)) #this doesnt fill correctly
-    #ideally it should fill blanks from user input first, then fill from fillerpartofspeech once user input words are all used up
-    #also story should be longer to allow for a bunch of blanks to be used
+    # STORY IS NOT INPUTTED
+    print(auto_fill_story(story, partofspeech_dict))
                 
     
 def parse_args(arglist):
