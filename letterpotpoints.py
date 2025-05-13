@@ -369,6 +369,7 @@ def auto_fill_story(story, player, fillerpartofspeech):
     
     filled = {}
     used_words = {}
+    
     player_pos_words = player.pos_guess(partofspeech_dict)
 
     
@@ -469,7 +470,7 @@ def play(story):
         elif userinput in guessed_words:
             print("You've already guessed that.")
         else:
-            guessed_words.append(userinput)
+            player.guessed_words.append(userinput)
             
             wordtype = get_word_type(userinput, partofspeech_dict)
             ####want to change so i don't need this if statement below, this shouldn't be necessisary 
@@ -488,7 +489,8 @@ def play(story):
             
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
-    
+    print("FOR TESTING PURPOSES:\n")
+    print(player.pos_guess(partofspeech_dict))
     # auto_fill_story is what fills in the story, DO REGEX STUFF IN AUTOFILLSTORY
     
     # STORY IS NOT INPUTTED
