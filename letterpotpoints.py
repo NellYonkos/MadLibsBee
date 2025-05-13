@@ -416,6 +416,9 @@ def play():
     print("Here it is:\n")
     
     # auto_fill_story is what fills in the story
+    
+    # WHY IS THE 
+    
     print(auto_fill_story(story, partofspeech_dict)) #this doesnt fill correctly
     #ideally it should fill blanks from user input first, then fill from fillerpartofspeech once user input words are all used up
     #also story should be longer to allow for a bunch of blanks to be used
@@ -437,10 +440,10 @@ def parse_args(arglist):
         By: Vonn Sayasa
     """
     parser = ArgumentParser()
-    parser.add_argument("filepath", help="Path to the TXT file"
+    parser.add_argument("story", help="Path to the TXT file"
                             "containing story")
     return parser.parse_args(arglist)
 
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
-    play(args.wordlist, args.names, args.computer_player, args.computer_vocab)
+    play(args.story)
