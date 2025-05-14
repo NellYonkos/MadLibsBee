@@ -277,6 +277,7 @@ def help(letterpot, player):
         
     Skill from list: 
         f-string containing expression
+        list comprehension
     """
     
     #Initializes a dictionary for the words and a list of guesses made
