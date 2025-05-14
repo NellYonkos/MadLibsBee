@@ -25,8 +25,8 @@ This site has short stories for kids. We referenced the story "An Octopus in Tro
 | inputpoints()    | Nell Yonkos    | Sequence unpacking                       |
 | ArgumentParser   | Vonn Sayasa    | ArgParse Function                        |
 |extractplaceholders|Vonn Sayasa    | Regex                                    |
-|auto_fill_story|Jaden Beaubrun     | Regex, With Statements, comprehensions   |
-|Player Class|Jaden Beaubrun        | N/A                                      |
-| missed_words|Jaden Beaubrun       | f-strings containing expressions         |
-| help()           | Nico Price     | comprehension, f-string with expressions |
+|auto_fill_story   | Jaden Beaubrun | Regex, With Statements, comprehensions   |
+|Player Class      | Jaden Beaubrun | N/A                                      |
+| missed_words     | Jaden Beaubrun | f-strings containing expressions         |
+| help             | Nico Price     | comprehension, f-string with expressions |
 
