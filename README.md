@@ -29,4 +29,5 @@ This site has short stories for kids. We referenced the story "An Octopus in Tro
 |Player Class      | Jaden Beaubrun | N/A                                      |
 | missed_words     | Jaden Beaubrun | f-strings containing expressions         |
 | help             | Nico Price     | comprehension, f-string with expressions |
+| play             | Everyone       | conditional expresions                   |
 
