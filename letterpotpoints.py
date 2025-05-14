@@ -80,7 +80,7 @@ partofspeech_dict = {
         "camise", "case", "claim", "clam", "clime", "email", "isle", "lace", "lame", 
         "lice", "lima", "lime", "mace", "mail", "male", "mali", "malice", "meal", 
         "mesa", "mescal", "mica", "mice", "mile", "sail", "sale", "salmi", "same", 
-        "samiel", "scale", "scam", "seal", "seam", "semi", "sial", "sima", "slam", 
+        "samiel", "scale", "seal", "seam", "semi", "sial", "sima", "slam", 
         "slice", "slime", "smile","ace"
 
     ],
@@ -112,23 +112,23 @@ partofspeech_dict = {
     "adjective": [
         "hyper", "sphery", "shyer", "spry", "hep","sweary", "weary", "early", 
         "leary", "slyer", "wary", "awry", "arsey", "easy", 
-        "rawly", "swaly", "swayl","calm", "laic", "lame", "male", "mesial", 
+        "rawly", "swaly", "swayl","calm", "laic", "lame", "mesial", 
         "mesic", "same", "slim"
     ]
 }
 
 fillerpartofspeech = {
     "noun": [
-        "apple","breeze","candle","dragon","forest","island","jungle","mountain",
-        "pencil","village","fish","snail"
+        "banana","bug","lizard","breeze","candle","dragon","forest","island",
+        "jungle","mountain","pencil","village","fish","snail","octopus","squid"
     ],
     "plural noun": [
-        "apples","books","cars","dogs","flowers","houses","islands","kites",
+        "apples","books","cars","dogs","flowers","bubbles","islands","kites",
         "stars","trees","sharks"
     ],
     "verb": [
         "climb","draw","explore","jump","laugh","paint","run","sing","swim",
-        "write","swim","tie"
+        "write","dance"
     ],
     "adjective": [
         "bright","calm","fierce","giant","happy","lazy","quick","shiny","tiny",
@@ -194,6 +194,9 @@ def totalpoints(letterpot):
         and integer game point values as the mapped value. Game points are 
         between 1-10. 10 being the rarest letter, 1 being the most common. 
         If there is an equal proportion of all letters in letterpots.
+        
+        lettercount (dict): count of frequency of each letter in the letterpot
+        in all of the words that can be made from the letterpot. 
         
     Skill from list: 
         use of a key function (which can be a lambda expression) with the 
@@ -332,7 +335,7 @@ def isvalid(letterpot_key, userinput, wordtype):
   # Testing out inputpoints as a method in player class to access score   
      
 def inputpoints(inputword, letterpot, wordtype):
-    """calculates the additional score for each input word
+    """calculates the additional score for each input word based on how rare.
     
     Args:
         inputword (str): word guessed by player
@@ -342,8 +345,12 @@ def inputpoints(inputword, letterpot, wordtype):
         wordtype (str): word part of speech (noun, verb, etc...)
     
     Returns:
-        f-string: stating how many total points have been found out of possible
-        string: stating invalid word if ValueError is thrown
+        int: points rewarded for this input word and total points possible
+             for all input words
+        string: stating invalid word if ValueError
+        
+    Raises:
+        ValueError: if isvalid function fails and ValueError is raised there
     
     Skill from list:
         Sequence unpacking
@@ -367,11 +374,18 @@ def inputpoints(inputword, letterpot, wordtype):
 
 def auto_fill_story(story, player, fillerpartofspeech):
     """
-    Fills in missing part of speech words automatically using words from the dictionary.
+    Fills in missing part of speech words automatically first using player
+    input words and then with fillerpartofspeech words as a backup. 
+    
     Args:
     story (str): The input story with placeholders like 'noun1', 'verb2', etc.
-        partofspeech_dict (dict): A dictionary where keys are parts of speech and values are words for that pos that
-        will work.
+        partofspeech_dict (dict): A dictionary where keys are parts of speech 
+        and values are words for that pos that will work.
+    player (object): object with method pos_guess() which has user input words 
+        grouped by part of speech. 
+    fillerpartofspeech (dict): a dictionary with parts of speech as keys and a 
+        few simple words in that part of speech as the keys for each. 
+    
     Returns:
         str: The completed story with all placeholders replaced with valid words.
     """
@@ -407,7 +421,8 @@ def auto_fill_story(story, player, fillerpartofspeech):
                     shouldpull = [w for w in fillerpartofspeech[pos] if w not in used_words[pos]]
                             
                 if shouldpull:
-                    first = shouldpull.pop(0)
+                    index = random.randint(0, len(shouldpull) - 1)
+                    first = shouldpull[index]
                     used_words[pos].append(first)
                     filled[placeholder] = first
                 else:
@@ -437,8 +452,8 @@ def get_word_type(word, partofspeech_dict):
 def play(story):
     """
     plays game allowing user input, takes user name, explains rules, checks
-       input word validity, gives score per input word, allows hint command,
-       prints story with words filled in
+    input word validity, gives score per input word, allows hint command,
+    prints story with words filled in
     
     Args:
         story (str): path to a text file containing a story
@@ -460,7 +475,7 @@ def play(story):
     print(f"Okay, {name}... your letters are \"{game_pot}\"\n")
     print("You can only use each letter once per word and your input words must be at least 4 letters long.\n")
     print("They've also got to be real words in the English dictionary-- I'll be checking.\n")
-    print("One word per guess. Type 'HELP' for a hint(3). Type 'DONE' when you're out.\n\n")
+    print("One word per guess. Type 'HELP' for a hint (just 1 per game). Type 'DONE' when you're out.\n\n")
     
     letterpoints, lettercount = totalpoints(game_pot)
     help_points = 3
@@ -476,7 +491,7 @@ def play(story):
             if help_points > 1:     
             # utilize help function only if enough help points are available
                 help(game_pot, player)
-                print(f"You have {help_points} hints left")
+               #print(f"You have {help_points} hints left")
             else:
                 print("You have used up all your hints")
         
@@ -503,8 +518,8 @@ def play(story):
             
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
-    print("FOR TESTING PURPOSES:\n")
-    print(player.pos_guess(partofspeech_dict))
+    #print("FOR TESTING PURPOSES:\n")
+    #print(player.pos_guess(partofspeech_dict))
     # auto_fill_story is what fills in the story, DO REGEX STUFF IN AUTOFILLSTORY
     
     # STORY IS NOT INPUTTED
