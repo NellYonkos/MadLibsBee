@@ -25,3 +25,4 @@ This site has short stories for kids. We referenced the story "An Octopus in Tro
 | inputpoints()    | Nell Yonkos    | Sequence unpacking                       |
 | ArgumentParser   | Vonn Sayasa    | ArgParse Function                        |
 |extractplaceholders|Vonn Sayasa    | Regex                                    |
+|auto_fill_story|Jaden Beaubrun    | Regex, With Statements, Compression       |
