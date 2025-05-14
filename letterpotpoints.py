@@ -284,10 +284,8 @@ def help(letterpot, player):
     words = letterpots[letterpot]
     
     #Initialized a new list then appends unguessed words to that list
-    temp_list = []
-    for word in words:
-        if word not in player.guessed_words and word not in temp_list:
-            temp_list.append(word)
+    temp_list = [word for word in words 
+        if word not in player.guessed_words and word not in temp_list]
             
     #Pulls a random word out of the temporary list and uses it as a help word
     help_word = random.choice(temp_list)

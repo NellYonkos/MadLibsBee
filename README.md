@@ -28,4 +28,5 @@ This site has short stories for kids. We referenced the story "An Octopus in Tro
 |auto_fill_story|Jaden Beaubrun    | Regex, With Statements, comprehensions      |
 |Player Class|Jaden Beaubrun    | N/A       |
 | missed_words|Jaden Beaubrun    | f-strings containing expressions      |
+| help()           | Nico Price     | 
 
