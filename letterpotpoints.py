@@ -507,7 +507,7 @@ def play(story):
             help_points -= 1 
             if help_points > 1:     
             # utilize help function only if enough help points are available
-                help(game_pot, player)
+                help(game_pot)
                #print(f"You have {help_points} hints left")
             else:
                 print("You have used up all your hints")
