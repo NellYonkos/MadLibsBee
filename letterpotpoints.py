@@ -263,7 +263,7 @@ def extract_placeholders(story):
 
 
 
-def help(letterpot, player):
+def help(letterpot):
     """Takes the words out of a dictionary of words corresponding to the chosen
     7 letters and filters out the guessed words. Prints out a word that has been
     randomly chosen from the unguessed words as the first and last letters of 
@@ -286,7 +286,7 @@ def help(letterpot, player):
     
     #Initialized a new list then appends unguessed words to that list
     temp_list = [word for word in words 
-        if word not in player.guessed_words and word not in temp_list]
+        if word not in Player.guessed_words and word not in temp_list]
             
     #Pulls a random word out of the temporary list and uses it as a help word
     help_word = random.choice(temp_list)
