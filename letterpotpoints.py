@@ -434,6 +434,24 @@ def auto_fill_story(story, player, fillerpartofspeech):
             text = text.replace(f"<{placeholder}>", filled[placeholder], 1)
     
     return text
+    
+def missed_words(letterpot_key, player):
+    """
+    Displays how many valid words were missed by the player using set operations.
+    
+    Args:
+        letterpot_key (str): The key to access the letterpot list of valid words.
+        player (Player): The Player object containing guessed words.
+    
+    Side Effects:
+        Prints number of missed words and optionally a few examples.
+    """
+    all_valid = set(letterpots[letterpot_key])
+    guessed = set(player.guessed_words)
+    missed = all_valid.difference(guessed)
+
+    print(f"You missed {len(missed)} words. Here's a few: {random.sample(list(missed), min(5, len(missed)))}")
+
 
 def get_word_type(word, partofspeech_dict):
     """gets part of speech for play() function
