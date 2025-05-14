@@ -534,6 +534,7 @@ def play(story):
             
     print("Ready for your story ◡̈\n") #repeats the same noun for multiple blanks, doesn't catch "plural noun"
     print("Here it is:\n")
+    missed_words(game_pot, player)
     #print("FOR TESTING PURPOSES:\n")
     #print(player.pos_guess(partofspeech_dict))
     # auto_fill_story is what fills in the story, DO REGEX STUFF IN AUTOFILLSTORY
